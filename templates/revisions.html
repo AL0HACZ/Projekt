@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 10px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>Čekající revize</h1>
+<p>Následující revize vyžadují schválení administrátorem, než se stanou veřejně viditelnými.</p>
+
+<div class="revisions-list">
+    {% for rev in revisions %}
+    <div class="revision-item" style="border: 1px solid #54595d; padding: 20px; margin-bottom: 20px; border-radius: 2px; background: #2a2a2c;">
+        <div class="revision-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px;">
+            <div>
+                <span class="revision-title" style="font-size: 1.2em; font-weight: bold;">{{ rev.article.title }}</span>
+                <span class="revision-meta" style="color: #a2a9b1; margin-left: 10px;">
+                    zveřejnil uživatel {% if rev.user %}<a href="{{ url_for('auth.profile', username=rev.user.username) }}">{{ rev.user.username }}</a>{% else %}Smazaný uživatel{% endif %}
+                </span>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <form method="POST" action="{{ url_for('admin.approve_revision', id=rev.id) }}">
+                    <button type="submit" class="btn" style="background-color: #00af89; border-color: #00af89;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 5px;"><polyline points="20 6 9 17 4 12"/></svg>Schválit</button>
+                </form>
+                <form method="POST" action="{{ url_for('admin.deny_revision', id=rev.id) }}">
+                    <button type="submit" class="btn btn-danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 5px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Zamítnout</button>
+                </form>
+            </div>
+        </div>
+        <pre class="diff-box">{{ rev.content }}</pre>
+    </div>
+    {% else %}
+    <div style="padding: 20px; background: #2a2a2c; border: 1px solid #54595d;">
+        <p style="margin: 0;">Ve vašich sekcích momentálně nejsou žádné čekající revize.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

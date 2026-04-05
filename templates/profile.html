@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ profile_user.display_name }} ({{ profile_user.username }})</h1>
+<div style="background: #2a2a2c; padding: 15px; border: 1px solid #54595d; border-radius: 2px; margin-bottom: 20px; display: inline-block;">
+    <p style="margin: 0 0 5px 0;"><strong>Členem od: </strong> {{ profile_user.created_at.strftime('%d. %m. %Y') }}</p>
+    <p style="margin: 0; color: #a2a9b1;"><strong>Naposledy zastižen: </strong> {{ profile_user.last_login.strftime('%d. %m. %Y %H:%M') if profile_user.last_login else 'Nikdy' }}</p>
+</div>
+
+{% if profile_user.groups %}
+<h3>Skupiny</h3>
+<ul>
+    {% for group in profile_user.groups %}
+        <li>{{ group.name }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h3>O mně</h3>
+<div class="article-content" style="background-color: #2a2a2c; padding: 15px; border: 1px solid #555;">
+    {% if profile_user.about_me %}
+        <pre style="border: none; background: transparent; padding: 0;">{{ profile_user.about_me }}</pre>
+    {% else %}
+        <p style="color: #aaa;">Tento uživatel o sobě zatím nic nenapsal.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="background-color: #2a2a2c; border: 1px solid #54595d; padding: 30px; text-align: center; margin-bottom: 30px; border-radius: 2px;">
+    <h1 style="margin-top: 0; border-bottom: none; font-size: 2.5em; color: #eaecf0;">Vítejte v Autopedia</h1>
+    <p style="font-size: 1.2em; color: #a2a9b1;">Bezplatná encyklopedie aut, kterou může upravovat kdokoli.</p>
+    <p style="margin-bottom: 0;">Čítáme celkem <strong>{{ count }}</strong> článků.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div>
+        <h2 style="margin-top: 0; font-size: 1.3em; background: #333; padding: 10px 15px; border: 1px solid #54595d;">Nejnovější články</h2>
+        <ul style="list-style: none; padding: 0; margin: 0; border: 1px solid #54595d; border-top: none; background: #2a2a2c;">
+            {% for article in articles %}
+            <li style="padding: 12px 15px; border-bottom: 1px solid #444;">
+                <a href="{{ url_for('article.view_article', id=article.id) }}" style="font-weight: bold; font-size: 1.1em;">{{ article.title }}</a>
+                {% if article.category %}
+                <span style="display: block; font-size: 0.85em; color: #a2a9b1; margin-top: 4px;">Sekce: {{ article.category.name }}</span>
+                {% endif %}
+            </li>
+            {% else %}
+            <li style="padding: 15px; color: #a2a9b1;">Zatím nebyly napsány žádné články.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h2 style="margin-top: 0; font-size: 1.3em; background: #333; padding: 10px 15px; border: 1px solid #54595d;">Začínáme</h2>
+        <div style="border: 1px solid #54595d; border-top: none; padding: 15px; background: #2a2a2c;">
+            <p style="margin-top: 0;">Autopedia je společný projekt. Můžete pomoci:</p>
+            <ul style="padding-left: 20px; margin-bottom: 0; color: #eaecf0;">
+                <li style="margin-bottom: 8px;">Procházením <a href="{{ url_for('article.categories') }}">sekcí</a> a upravováním článků.</li>
+                <li>Aktivním zapojováním do naší skvělé komunity.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

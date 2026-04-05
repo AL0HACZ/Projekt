@@ -1,0 +1,244 @@
+body {
+    background-color: #202122;
+    color: #eaecf0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Lato, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: 14px;
+}
+
+.header {
+    background-color: #202122;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #54595d;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.header a {
+    color: #eaecf0;
+    text-decoration: none;
+    font-size: 0.95em;
+    margin-left: 15px;
+    font-weight: normal;
+}
+
+.header a.brand, .header div:first-child a {
+    font-family: 'Linux Libertine', Georgia, Times, serif;
+    font-size: 1.6em;
+    font-weight: normal;
+    margin-left: 0;
+    margin-right: 25px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.search-form {
+    display: inline-flex;
+    align-items: center;
+}
+
+.search-form input {
+    margin-bottom: 0;
+    border-radius: 2px 0 0 2px;
+    width: 250px;
+    padding: 6px 12px;
+    height: 32px;
+    background-color: #101418;
+    color: #eaecf0;
+    border: 1px solid #72777d;
+    box-sizing: border-box;
+}
+
+.search-form button {
+    margin-bottom: 0;
+    border-radius: 0 2px 2px 0;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    background-color: #36c;
+    color: #fff;
+    border: 1px solid #36c;
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sidebar {
+    width: 200px;
+    padding: 30px 20px;
+    background-color: #202122;
+    flex-shrink: 0;
+}
+
+.sidebar a {
+    display: block;
+    color: #8da3cd;
+    text-decoration: none;
+    padding: 6px 0;
+    font-size: 0.95em;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+.content {
+    flex: 1;
+    padding: 30px 50px;
+    background-color: #202122;
+    max-width: 900px;
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+
+h1, h2, h3 {
+    font-family: 'Linux Libertine', Georgia, Times, serif;
+    border-bottom: 1px solid #54595d;
+    padding-bottom: 5px;
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 2em;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.2em;
+    border-bottom: none;
+}
+
+a {
+    color: #69f;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.infobox {
+    float: right;
+    background-color: #2a2a2c;
+    border: 1px solid #54595d;
+    padding: 15px;
+    width: 280px;
+    margin: 0 0 15px 25px;
+    font-size: 0.9em;
+}
+
+.infobox th {
+    text-align: left;
+    padding-right: 15px;
+    color: #eaecf0;
+}
+
+input[type="text"], input[type="password"], textarea, select {
+    background-color: #101418;
+    color: #eaecf0;
+    border: 1px solid #72777d;
+    padding: 8px 12px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-family: inherit;
+}
+
+button, .btn {
+    background-color: #36c;
+    color: #fff;
+    border: 1px solid #36c;
+    padding: 6px 12px;
+    border-radius: 2px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.95em;
+}
+
+button:hover, .btn:hover {
+    background-color: #447ff5;
+    text-decoration: none;
+}
+
+.btn-danger {
+    background-color: #d33;
+    border-color: #d33;
+}
+
+.btn-danger:hover {
+    background-color: #f44;
+}
+
+.btn-warning {
+    background-color: #d90;
+    border-color: #d90;
+}
+
+.btn-warning:hover {
+    background-color: #fa0;
+}
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 0.85em;
+}
+
+pre {
+    background: #101418;
+    padding: 15px;
+    border: 1px solid #54595d;
+    white-space: pre-wrap;
+    font-family: monospace;
+    border-radius: 2px;
+    overflow-x: auto;
+}
+
+.admin-list {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #2a2a2c;
+    border: 1px solid #54595d;
+    margin-bottom: 10px;
+    border-radius: 2px;
+}
+
+.meta-info {
+    color: #a2a9b1;
+    font-size: 0.9em;
+    margin-left: 10px;
+}

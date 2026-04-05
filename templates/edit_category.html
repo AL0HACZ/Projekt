@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Úprava sekce: {{ category.name }}</h1>
+<a href="{{ url_for('admin.manage_categories') }}">Zpět do Správy sekcí</a>
+
+<form method="POST" style="max-width: 400px; margin-top: 20px; background: #2a2a2c; padding: 20px; border: 1px solid #54595d;">
+    <label>Název sekce</label>
+    <input type="text" name="name" value="{{ category.name }}" required>
+
+    <label>Typ sekce</label>
+    <input type="text" name="type" value="{{ category.type }}" required>
+
+    <button type="submit" class="btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 5px;"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Potvrdit změny</button>
+</form>
+{% endblock %}

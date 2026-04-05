@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Historie revizí: {{ article.title }}</h1>
+    <a href="{{ url_for('article.view_article', id=article.id) }}">Zpět ke Článku</a>
+
+    <style>
+        /* Container for the table to allow scroll only if absolutely necessary */
+        .diff-container {
+            margin-top: 10px;
+            overflow-x: hidden; /* Prevent outer scroll */
+            background: #1a1a1c;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .diff_table {
+            font-family: 'Cascadia Code', 'Courier New', monospace;
+            font-size: 0.85em;
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Crucial: forces columns to respect width */
+        }
+
+        /* Column Widths */
+        .diff_header {
+            width: 40px;
+            background-color: #1a1a1c;
+            color: #6e7681;
+            text-align: right;
+            padding: 0 5px;
+        }
+
+        .diff_next {
+            display: none;
+        }
+
+        /* Hide navigation links */
+
+        /* Content Cells */
+        td {
+            vertical-align: top;
+            word-break: break-all; /* Breaks long strings */
+            white-space: pre-wrap; /* Maintains spacing but allows wrapping */
+            padding: 2px 8px;
+        }
+
+        /* Diff Colors */
+        .diff_add {
+            background-color: #1e3a1e;
+            color: #acf2bd;
+        }
+
+        .diff_chg {
+            background-color: #3d3d1e;
+            color: #e3e3b3;
+        }
+
+        .diff_sub {
+            background-color: #441a1a;
+            color: #ffd8d8;
+        }
+
+        /* Subtle border between the two versions */
+        td:nth-child(3) {
+            border-right: 1px solid #30363d;
+        }
+    </style>
+
+    <div style="margin-top: 25px;">
+        {% for item in diffs %}
+            <div style="border: 1px solid #54595d; padding: 15px; margin-bottom: 15px; background: #2a2a2c; border-radius: 2px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>{{ item.rev.created_at.strftime('%d. %m. %Y %H:%M:%S') }}</strong>
+                        <span style="color: #a2a9b1; margin-left: 10px;">
+                    uživatelem {% if item.rev.user %}
+                            <a href="{{ url_for('auth.profile', username=item.rev.user.username) }}">{{ item.rev.user.username }}</a>{% else %}
+                            Smazaný uživatel{% endif %}
+                </span>
+                    </div>
+                    {% if item.rev.approved_by %}
+                        <span style="font-size: 0.85em; color: #a2a9b1;">Schválil: {{ item.rev.approved_by.username }}</span>
+                    {% endif %}
+                </div>
+
+                <details style="margin-top: 10px;">
+                    <summary style="cursor: pointer; color: #69f; user-select: none; font-weight: bold;">
+                        Zobrazit porovnání změn
+                    </summary>
+                    <div class="diff-container">
+                        {{ item.diff_html|safe }}
+                    </div>
+                </details>
+            </div>
+        {% else %}
+            <p>Nebyly nalezeny žádné historické schválené revize.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

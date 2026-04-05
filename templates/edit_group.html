@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Úprava skupiny: {{ group.name }}</h1>
+<a href="{{ url_for('admin.manage_groups') }}">Zpět do Správy skupin</a>
+
+<form method="POST" style="max-width: 600px; margin-top: 20px; background: #2a2a2c; padding: 20px; border: 1px solid #54595d;">
+    <label>Název skupiny</label>
+    <input type="text" name="name" value="{{ group.name }}" required>
+
+    <div style="margin-bottom: 20px;">
+        <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer;">
+            <input type="checkbox" name="is_super_admin" {% if group.is_super_admin %}checked{% endif %} style="width: auto; margin-right: 10px;"> Administrátorská oprávnění
+        </label>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+        <div>
+            <h3 style="margin-top: 0;">Přiřazení uživatelé</h3>
+            <input type="text" id="userFilter" placeholder="Hledat uživatele..." onkeyup="filterUsers()" style="margin-bottom: 10px; padding: 6px 10px; width: 100%; box-sizing: border-box; background: #101418; color: #eaecf0; border: 1px solid #54595d; border-radius: 2px;">
+            <div id="userList" style="height: 250px; overflow-y: auto; border: 1px solid #54595d; background: #101418; padding: 10px; border-radius: 2px;">
+                {% for u in users %}
+                <label class="user-item" style="display: flex; align-items: center; margin-bottom: 8px; cursor: pointer;">
+                    <input type="checkbox" name="user_ids" value="{{ u.id }}" {% if u in group.users %}checked{% endif %} style="width: auto; margin-right: 10px; margin-bottom: 0;">
+                    <span>{{ u.username }} <small style="color: #a2a9b1;">({{ u.display_name }})</small></span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <h3 style="margin-top: 0;">Moderované sekce</h3>
+            <input type="text" id="catFilter" placeholder="Hledat sekce..." onkeyup="filterCategories()" style="margin-bottom: 10px; padding: 6px 10px; width: 100%; box-sizing: border-box; background: #101418; color: #eaecf0; border: 1px solid #54595d; border-radius: 2px;">
+            <div id="catList" style="height: 250px; overflow-y: auto; border: 1px solid #54595d; background: #101418; padding: 10px; border-radius: 2px;">
+                {% for c in categories %}
+                <label class="cat-item" style="display: flex; align-items: center; margin-bottom: 8px; cursor: pointer;">
+                    <input type="checkbox" name="category_ids" value="{{ c.id }}" {% if c in group.categories %}checked{% endif %} style="width: auto; margin-right: 10px; margin-bottom: 0;">
+                    <span>{{ c.name }} <small style="color: #a2a9b1;">({{ c.type }})</small></span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 5px;"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Potvrdit změny</button>
+</form>
+
+<script>
+function filterUsers() {
+    let input = document.getElementById('userFilter').value.toLowerCase();
+    let items = document.querySelectorAll('.user-item');
+    items.forEach(item => {
+        let text = item.innerText.toLowerCase();
+        item.style.display = text.includes(input) ? 'flex' : 'none';
+    });
+}
+function filterCategories() {
+    let input = document.getElementById('catFilter').value.toLowerCase();
+    let items = document.querySelectorAll('.cat-item');
+    items.forEach(item => {
+        let text = item.innerText.toLowerCase();
+        item.style.display = text.includes(input) ? 'flex' : 'none';
+    });
+}
+</script>
+{% endblock %}

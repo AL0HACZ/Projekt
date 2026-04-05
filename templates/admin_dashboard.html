@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Autopedia Administrace</h1>
+<p>Vítejte v administračním prostředí.</p>
+<ul>
+    <li><a href="{{ url_for('admin.manage_users') }}">Správa uživatel</a></li>
+    <li><a href="{{ url_for('admin.manage_groups') }}">Správa skupin</a></li>
+    <li><a href="{{ url_for('admin.manage_categories') }}">Správa sekcí</a></li>
+    <li><a href="{{ url_for('admin.pending_revisions') }}">Čekající revize</a></li>
+</ul>
+{% endblock %}

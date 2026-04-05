@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Registrace</h1>
+{% if error %}
+<div style="background-color: #d33; padding: 10px; margin-bottom: 15px; border-radius: 2px;">{{ error }}</div>
+{% endif %}
+<form method="POST" style="max-width: 350px;">
+    <label>Uživatelské jméno</label>
+    <input type="text" name="username" required minlength="3" maxlength="16">
+
+    <label>Zobrazované jméno</label>
+    <input type="text" name="display_name" required maxlength="64">
+
+    <label>Heslo</label>
+    <input type="password" name="password" required>
+
+    <button type="submit" class="btn">Registrovat</button>
+</form>
+<p style="margin-top: 15px;">Již máte účet? <a href="{{ url_for('auth.login') }}">Přihlašte se</a>.</p>
+{% endblock %}

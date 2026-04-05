@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Vytvoření článku</h1>
+<div class="meta-info" style="margin-left: 0; margin-bottom: 20px; display: inline-block; background: #2a2a2c; padding: 8px 15px; border: 1px solid #54595d; border-radius: 2px;">
+    Vytváříte článek uvnitř sekce: <strong>{{ category.name }}</strong>
+</div>
+<button type="button" onclick="document.getElementById('file-import').click()" class="btn btn-sm"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 10px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>Importovat ze souboru</button>
+<input type="file" id="file-import" accept=".md,.txt" style="display: none;">
+<form method="POST">
+    <label>Název článku</label>
+    <input type="text" name="title" required>
+
+    <label>Obsah článku</label>
+    <textarea name="content" rows="12" required placeholder="Zde můžete používat Markdown formát..."></textarea>
+
+    <div class="attributes-grid">
+        <div style="background: #2a2a2c; padding: 15px; border: 1px solid #54595d;">
+            <h3>Klíčová slova</h3>
+            <p style="font-size: 0.9em; color: #aaa;">Odděleno čárkou (např. rychlý, sedan, luxusní)</p>
+            <input type="text" name="keywords">
+        </div>
+    </div>
+
+    <button type="submit" class="btn" style="width: 100%; padding: 12px;">Publikovat článek</button>
+</form>
+
+<script>
+    document.getElementById('file-import').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const contentTextarea = document.querySelector('textarea[name="content"]');
+            if (contentTextarea) {
+                contentTextarea.value = e.target.result;
+            }
+        };
+
+        reader.readAsText(file);
+        event.target.value = '';
+    });
+</script>
+{% endblock %}

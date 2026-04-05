@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Uživatelská nastavení</h1>
+<form method="POST" style="max-width: 500px;">
+    <label>Uživatelské jméno</label>
+    <input type="text" name="username" value="{{ user.username }}" style="color: #54595d" required disabled>
+
+    <label>Zobrazované jméno</label>
+    <input type="text" name="display_name" value="{{ user.display_name }}" required>
+    
+    <label>O mně</label>
+    <textarea name="about_me" rows="8">{{ user.about_me }}</textarea>
+    
+    <label>Nové heslo (nechte prázdné pro ponechání stávajícího)</label>
+    <input type="password" name="password">
+    
+    <button type="submit">Uložit změny</button>
+</form>
+{% endblock %}

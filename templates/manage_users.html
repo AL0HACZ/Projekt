@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 10px;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Správa uživatelů</h1>
+<a href="{{ url_for('admin.dashboard') }}">Zpět do Administrace</a>
+<table style="width: 100%; margin-top: 20px; text-align: left; border-collapse: collapse;">
+    <tr style="border-bottom: 1px solid #555;">
+        <th style="padding: 10px 0;">Uživatel</th>
+        <th>Zobrazované jméno</th>
+        <th>Registrace</th>
+        <th>Poslední login</th>
+        <th>Akce</th>
+    </tr>
+    {% for u in users %}
+    <tr style="border-bottom: 1px solid #444;">
+        <td style="padding: 10px 0;">{{ u.username }}</td>
+        <td>{{ u.display_name }}</td>
+        <td>{{ u.created_at.strftime('%Y-%m-%d') }}</td>
+        <td style="color: #a2a9b1;">{{ u.last_login.strftime('%Y-%m-%d %H:%M') if u.last_login else 'Nikdy' }}</td>
+        <td>
+            <a href="{{ url_for('auth.profile', username=u.username) }}" class="btn btn-sm">Info</a>
+            <a href="{{ url_for('admin.edit_user', id=u.id) }}" class="btn btn-sm" style="background-color: #2a2a2c; border-color: #54595d;">Úprava</a>
+            {% if user.id != u.id %}
+            <form method="POST" action="{{ url_for('admin.reset_password', id=u.id) }}" style="display:inline;">
+                <input type="password" name="new_password" placeholder="Nové heslo" required style="width: 100px; padding: 4px; border-radius: 2px; border: 1px solid #72777d; background: #101418; color: #eaecf0; margin-right: 5px; font-size: 0.9em;">
+                <button type="submit" class="btn btn-warning btn-sm">Nastavit</button>
+            </form>
+            <form method="POST" action="{{ url_for('admin.delete_user', id=u.id) }}" style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+            </form>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Vyhledávání</h1>
+<p>Hledám výraz: <strong>"{{ query }}"</strong></p>
+
+{% if results %}
+    <div class="search-results-list" style="margin-top: 25px;">
+        {% for article in results %}
+        <div class="search-result" style="padding: 15px 20px; border: 1px solid #54595d; margin-bottom: 15px; background-color: #2a2a2c; border-radius: 2px;">
+            <h3 style="margin: 0 0 8px 0; border-bottom: none;">
+                <a href="{{ url_for('article.view_article', id=article.id) }}" style="font-size: 1.1em; font-weight: bold;">{{ article.title }}</a>
+            </h3>
+            <div class="meta-info" style="margin-left: 0; color: #a2a9b1; font-size: 0.9em;">
+                Category: <a href="{{ url_for('article.view_category', id=article.category.id) }}" style="color: #8da3cd;">{{ article.category.name }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div style="background-color: #2a2a2c; padding: 20px; border: 1px solid #54595d; border-radius: 2px; margin-top: 25px;">
+        <p style="margin: 0; color: #eaecf0;">Pro váš dotaz nebyly nalezeny žádné výsledky. Zkuste hledat podle klíčových slov nebo přesného názvu.</p>
+    </div>
+{% endif %}
+{% endblock %}

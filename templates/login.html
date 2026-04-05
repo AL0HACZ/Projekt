@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Přihlášení</h1>
+{% if error %}
+<div style="background-color: #d33; padding: 10px; margin-bottom: 15px; border-radius: 2px;">{{ error }}</div>
+{% endif %}
+<form method="POST" style="max-width: 300px;">
+    <label>Uživatelské jméno</label>
+    <input type="text" name="username" required>
+    <label>Heslo</label>
+    <input type="password" name="password" required>
+    <button type="submit">Přihlásit se</button>
+</form>
+{% endblock %}
