@@ -4,7 +4,7 @@ from sqlalchemy.sql.expression import func
 from markdown_it import MarkdownIt
 import difflib
 
-from models import db
+from models import db, User
 from models.article import Article, Revision, Category, Keyword
 from routes import get_current_user
 
@@ -18,8 +18,10 @@ def index():
     articles = Article.query.all()
 
     lastest_articles = articles[-5:]
+    usercount = len(User.query.all())
 
-    return render_template('index.html', user=user, articles=lastest_articles, count=len(articles))
+    return render_template('index.html', user=user, articles=lastest_articles, count=len(articles), usercount = usercount)
+
 
 
 @article_bp.route('/random')
